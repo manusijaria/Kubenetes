@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build:
+      context: ./api
+    ports:
+      - "8080:5000"
+    depends_on:
+      - my_python_app
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - my_network
+
+  my_python_app:
+    build:
+      context: ./ingestion
+    networks:
+      - my_network
+
+networks:
+  my_network:
